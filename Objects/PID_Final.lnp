@@ -1,0 +1,11 @@
+--cpu Cortex-M3
+".\objects\pid_main.o"
+".\objects\mcpwm.o"
+".\objects\uart0.o"
+".\objects\util.o"
+".\objects\qei.o"
+".\objects\startup_lpc17xx.o"
+".\objects\system_lpc17xx.o"
+--ro-base 0x00000000 --entry 0x00000000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\PID_Final.map" -o .\Objects\PID_Final.axf

@@ -1,0 +1,45 @@
+DEFINE FLOAT separation
+separation = 1024;
+
+DEFINE FLOAT calc_rpm;
+calc_rpm = 0;
+
+DEFINE INT base;
+base = 100;
+
+signal void GPIO2_pulse(void)
+{
+	twatch(10);
+	
+	while(1)
+	{
+		P0RT2 = 1;
+		twatch((unsigned long) (separation * CLOCK));
+		PORT2 = 0;
+		twatch((unsigned long) (separation * CLOCK));
+	}	
+}
+
+FUNC void calcSeparation(void)
+{
+	calc_rpm = (duty_set * rpm_max / base);
+	separation = (60/(rpm_current * encoder_cpr));
+}
+
+FUNC void addDisturbance()
+{
+	base += 10;
+	calcSeparation();
+}
+
+FUNC void remDisturbance()
+{
+	base = 100;
+	calcSeparation();
+}
+
+BS \\PID_Final\MCPWM.c\MCPWMStart, 1, "send(1)"
+
+DEFINE BUTTON "Add Disturbance", "addDisturbance()"
+DEFINE BUTTON "Clear Disturbance", "remDisturbance()"
+
